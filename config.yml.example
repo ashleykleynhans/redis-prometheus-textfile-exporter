@@ -1,0 +1,5 @@
+---
+textfile_path: /etc/prometheus/node_exporter_textfiles
+redis:
+    host: 127.0.0.1
+    port: 6379
