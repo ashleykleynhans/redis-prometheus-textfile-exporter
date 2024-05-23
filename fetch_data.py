@@ -17,11 +17,11 @@ def load_config(script_path):
 
 
 def get_redis_client(config, decode_responses=False):
-    return redis.Redis(
+    return redis.Redis(connection_pool=redis.ConnectionPool(
         host=config['redis']['host'],
         port=config['redis']['port'],
         decode_responses=decode_responses
-    )
+    ))
 
 
 def fetch_data(config):
