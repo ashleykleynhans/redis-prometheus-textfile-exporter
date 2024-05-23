@@ -5,6 +5,14 @@ import redis
 import yaml
 from typing import Dict
 
+KEYS_TO_SKIP = [
+    'redis_version',
+    'redis_ssl_current_certificate_not_before_date',
+    'redis_ssl_current_certificate_not_after_date',
+    'redis_ssl_current_certificate_serial',
+    'redis_errorstat_LOADING'
+]
+
 
 def load_config(script_path):
     try:
@@ -38,12 +46,13 @@ def write_data(data):
 
     f = open(tmp_output_file, 'a')
     for key, value in data.items():
-        if isinstance(value, Dict):
+        if isinstance(value, Dict) or key in KEYS_TO_SKIP:
             continue
 
         if not key.startswith('redis_'):
             key = f'redis_{key}'
 
+        # print(key, value)
         f.write(f'{key} {value}\n')
     f.close()
 
